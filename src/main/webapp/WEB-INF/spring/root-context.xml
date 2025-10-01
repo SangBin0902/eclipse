@@ -9,5 +9,18 @@
 		https://www.springframework.org/schema/context/spring-context.xsd">
 		
 	<context:component-scan base-package="org.zerock.service"/>
+	
+		<bean name="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+		<property name="jdbcUrl" value="jdbc:mysql://Localhost:3306/springdb" />
+		<property name="username" value="springuser" />
+		<property name="password" value="springuser" />
+		<property name="connectionTimeout" value="30000" />
+		<property name="minimumIdle" value="2" />
+	</bean>
+	
+	<bean name="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
 
 </beans>
