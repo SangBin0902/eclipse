@@ -7,7 +7,13 @@
 	</Appenders>
 	
 	<Loggers>
-		<Logger name="org.springframework" level="DEBUG" additivity="false">
+		<Logger name="com.zaxxer" level="DEBUG" additivity="false">
+			<AppenderRef ref="console"/>
+		</Logger>
+		<Logger name="org.springframework" level="INFO" additivity="false">
+			<AppenderRef ref="console"/>
+		</Logger>
+		<Logger name="org.zerock" level="DEBUG" additivity="false">
 			<AppenderRef ref="console"/>
 		</Logger>
 		
@@ -15,4 +21,5 @@
 			<AppenderRef ref="console"/>
 		</Root>
 	</Loggers>
+	
 </Configuration>
