@@ -21,4 +21,11 @@ public class TimeMapperTests {
 		log.info("--------");
 		log.info(timeMapper.getTime());
 	}
+	
+	@Test
+	public void testTime2() {
+		log.info("================");
+		
+		log.info(timeMapper.getTime2());
+	}
 }
