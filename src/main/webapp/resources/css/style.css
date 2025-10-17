@@ -22,7 +22,7 @@ body {
 }
 
 .sidebar {
-	width: 200px;
+	width: 220px;
 	background-color: #0b5ed7;
 	height: calc(100vh - 70px);
 }
@@ -33,10 +33,10 @@ body {
 	border: none;
 }
 
-.sidebar .list-group-item {
-	background-color: transparent;
+.sidebar .list-group-item:hover,
+.sidebar .list-group-item.active {
+	background-color: #0a58ca;
 	color: white;
-	border:none;
 }
 
 .content {
