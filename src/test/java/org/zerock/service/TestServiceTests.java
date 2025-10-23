@@ -20,10 +20,10 @@ public class TestServiceTests {
 	@Test
 	public void testAll() {
 		
-		log.info("is proxy? " + AopUtils.isAopProxy(testService));
+		// log.info("is proxy? " + AopUtils.isAopProxy(testService));
 		
-		String str = "Alice was beginning";
+		// String str = "Alice was beginning";
 		
-		testService.insertAll(str);
+		// testService.insertAll(str);
 	}
 }

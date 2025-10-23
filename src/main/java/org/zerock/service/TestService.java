@@ -19,11 +19,11 @@ public class TestService {
 		
 		int resultA = testMapper.insertA(str);
 		
-		log.info("insert A " + resultA);
+		// log.info("insert A " + resultA);
 		
 		int resultB = testMapper.insertB(str);
 		
-		log.info("insertB " + resultB);
+		// log.info("insertB " + resultB);
 	}
 
 }

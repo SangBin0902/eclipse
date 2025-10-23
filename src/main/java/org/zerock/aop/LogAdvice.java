@@ -18,8 +18,8 @@ public class LogAdvice {
 	
 	@Before("execution(* org.zerock.service.*.*(..))")
 	public void logParams(JoinPoint jp) {
-		log.info("==========");
-		log.info("logParams");
+		// log.info("==========");
+		// log.info("logParams");
 		
 		Object[] params = jp.getArgs();
 		
@@ -36,8 +36,8 @@ public class LogAdvice {
 	@Around("execution(* org.zerock.service.*.*(..))")
 	public Object logTime(ProceedingJoinPoint pjp) throws Throwable {
 		
-		log.info("=========");
-		log.info("logTimes");
+		// log.info("=========");
+		// log.info("logTimes");
 		
 		long start = System.currentTimeMillis();
 		

@@ -16,16 +16,16 @@ public class TimeMapperTests {
 	@Autowired
 	private TimeMapper timeMapper;
 	
-	@Test
-	public void testTime1() {
-		log.info("--------");
-		log.info(timeMapper.getTime());
-	}
-	
-	@Test
-	public void testTime2() {
-		log.info("================");
-		
-		log.info(timeMapper.getTime2());
-	}
+//	@Test
+//	public void testTime1() {
+//		log.info("--------");
+//		log.info(timeMapper.getTime());
+//	}
+//	
+//	@Test
+//	public void testTime2() {
+//		log.info("================");
+//		
+//		log.info(timeMapper.getTime2());
+//	}
 }

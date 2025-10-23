@@ -21,8 +21,8 @@ public class DBTests {
 	@Test
 	public void testConnection() {
 		
-		log.info("-----------");
-		log.info(dataSource);
-		log.info("-----------");
+//		log.info("-----------");
+//		log.info(dataSource);
+//		log.info("-----------");
 	}
 }

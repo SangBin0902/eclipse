@@ -10,4 +10,28 @@
 	insert into tbl_board (title, content, writer) values(#{title}, #{content}, #{writer})
 	
 	</insert>
+	
+	<select id="selectOne" resultType="BoardDTO">
+	
+	SELECT * FROM tbl_board WHERE bno = #{bno}
+	
+	</select>
+	
+	<update id="remove">
+	
+	UPDATE tbl_board SET delflag = true WHERE bno = #{bno}
+	
+	</update>
+	
+	<update id="update">
+	
+	UPDATE tbl_board SET title = #{title}, content = #{content}, updatedate = now(), delflag = #{delFlag} WHERE bno = #{bno}
+	
+	</update>
+	
+	<select id="list" resultType="BoardDTO">
+	
+	SELECT bno, title, writer, regDate FROM tbl_board WHERE delflag = false ORDER By bno desc
+	
+	</select>
 </mapper>
