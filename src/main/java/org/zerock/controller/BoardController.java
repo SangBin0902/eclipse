@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.dto.BoardDTO;
 import org.zerock.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,28 +38,39 @@ public class BoardController {
 	}
 	
 	@PostMapping("register")
-	public String registerPost() {
+	public String registerPost(BoardDTO dto, RedirectAttributes rttr) {
 		
 		log.info("===========================");
 		log.info("board register post");
+		
+		Long bno = boardService.register(dto);
+		rttr.addFlashAttribute("result", bno);
 		
 		return "redirect:/board/list";
 	}
 	
 	@GetMapping("read/{bno}")
-	public String read(@PathVariable("bno")Long bno) {
+	public String read(@PathVariable("bno")Long bno, Model model) {
 		
 		log.info("===========================");
 		log.info("board read");
+		
+		BoardDTO dto = boardService.read(bno);
+		
+		model.addAttribute("board", dto);
 		
 		return "/board/read";
 	}
 	
 	@GetMapping("modify/{bno}")
-	public String modifyGET(@PathVariable("bno")Long bno) {
+	public String modifyGET(@PathVariable("bno")Long bno, Model model) {
 		
 		log.info("===========================");
 		log.info("board modify get");
+		
+		BoardDTO dto = boardService.read(bno);
+		
+		model.addAttribute("board", dto);
 		
 		return "/board/modify";
 	}
@@ -79,4 +92,6 @@ public class BoardController {
 		
 		return "redirect:/board/list";
 	}
+	
+	
 }

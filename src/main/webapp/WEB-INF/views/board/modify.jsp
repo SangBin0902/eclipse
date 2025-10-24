@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="/WEB-INF/views/includes/header.jsp"  %>
 
 <div class="row jusify-content-center">
@@ -13,6 +14,31 @@
 			<div class="card-body">
 			
 				<form id="actionForm" action="/board/modify" method="post">
+				
+					<div class="mb-3 input-group input-group-lg">
+						<span class="input-group-text">Bno</span>
+						<input type="text" name="bno" class="form-control" value="<c:out value='${board.bno}'/>" readonly>
+					</div>
+					
+					<div class="mb-3 input-group input-group-lg">
+						<span class="input-group-text">Title</span>
+						<input type="text" name="title" class="form-control" value="<c:out value='${board.title}'/>">
+					</div>
+					
+					<div class="mb-3 input-group input-group-lg">
+						<span class="input-group-text">Content</span>
+						<textarea class="form-control" name="content" rows="3"><c:out value="${board.content}"/></textarea>
+					</div>
+					
+					<div class="mb-3 input-group input-group-lg">
+						<span class="input-group-text">Writer</span>
+						<input type="text" name="bno" class="form-control" value="<c:out value='${board.writer}'/>" readonly>
+					</div>
+					
+					<div class="mb-3 input-group input-group-lg">
+						<span class="input-group-text">RegDate</span>
+						<input type="text" name="bno" class="form-control" value="<c:out value='${board.createdDate}'/>" readonly>
+					</div>
 				
 				</form>
 			
@@ -32,24 +58,24 @@ const formObj = document.querySelector("#actionForm")
 
 document.querySelector(".btnModify").addEventListener("click", () => {
 	
-	formObj.action = '/board/modify'
-	formObj.method = 'post'
-	formObj.submit()
-}, false)
+	formObj.action = '/board/modify';
+	formObj.method = 'post';
+	formObj.submit();
+});
 
 document.querySelector(".btnList").addEventListener("click", () => {
 	
-	formObj.action = '/board/list'
-	formObj.method = 'get'
-	formObj.submit()
-}, false)
+	formObj.action = '/board/list';
+	formObj.method = 'get';
+	formObj.submit();
+});
 
 document.querySelector(".btnRemove").addEventListener("click", () => {
 
-	formObj.action = '/board/remove'
-	formObj.method = 'post'
-	formObj.submit()
-}, false)
+	formObj.action = '/board/remove';
+	formObj.method = 'post';
+	formObj.submit();
+});
 
 </script>
 
