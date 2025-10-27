@@ -102,4 +102,18 @@ public class BoardMapperTests {
 //		
 //		dtoList.stream().forEach(log::info);
 //	}
+	
+//	@Test
+//	public void testList2() {
+//		
+//		int page = 2;
+//		
+//		// 계산
+//		int skip = (page - 1) * 10;
+//		int count = 10;
+//		
+//		List<BoardDTO> dtoList = boardMapper.list2(skip, count);
+//		
+//		dtoList.stream().forEach(log::info);
+//	}
 }

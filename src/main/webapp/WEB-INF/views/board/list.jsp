@@ -25,7 +25,7 @@
 					</thead>
 					<tbody class="tbody">
 						
-						<c:forEach var="board" items="${list}">
+						<c:forEach var="board" items="${dto.boardDTOList}">
 							<tr data-bno="${board.bno}">
 								<td>
 									<a href='/board/read/${board.bno}'>
@@ -34,11 +34,34 @@
 								</td>
 								<td><c:out value="${board.title}" /></td>
 								<td><c:out value="${board.writer}" /></td>
-								<td><c:out value="${board.createdDate}" /></td>
+								<td><c:out value="${board.regDate}" /></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
+				
+					<div class="d-flex justify-content-center">
+						<ul class="pagination">
+							
+							<c:if test="${dto.prev}">
+							<li class="page-item">
+								<a class="page-link" href="" tabindex="-1">Previous</a>
+							</li>
+							</c:if>
+							
+							<c:forEach var="num" items="${dto.pageNums}">
+							<li class="page-item">
+								<a class="page-link" href="${num}"> ${num} </a>
+							</li>
+							</c:forEach>
+							
+							<c:if test="${dto.next}">
+							<li class="page-item">
+								<a class="page-link" href="">Next</a>
+							</li>
+							</c:if>
+						</ul>
+					</div>
 			
 			</div>
 		</div>
@@ -73,6 +96,17 @@ console.log(myModal)
 if(result) {
 	myModal.show()
 }
+
+const pagingDiv = document.querySelector(".pagination")
+
+pagingDiv.addEventListener("click", (e) => {
+	e.preventDefault()
+	e.stopPropagation()
+	
+	const target = e.target
+	
+	console.log(target)
+}, false)
 
 </script>
 

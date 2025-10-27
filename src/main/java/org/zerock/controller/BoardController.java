@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.dto.BoardDTO;
 import org.zerock.service.BoardService;
@@ -22,12 +23,12 @@ public class BoardController {
 	private final BoardService boardService;
 
 	@GetMapping("list")
-	public void list(Model model) {
+	public void list(@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "size", defaultValue = "10") int size, Model model) {
 		
-		log.info("===========================");
-		log.info("board list");
+		log.info("page : " + page);
+		log.info("size : " + size);
 		
-		model.addAttribute("list", boardService.getList());
+		model.addAttribute("dto", boardService.getList(page, size));
 	}
 	
 	@GetMapping("register")
@@ -76,19 +77,25 @@ public class BoardController {
 	}
 	
 	@PostMapping("modify")
-	public String modifyPOST() {
+	public String modifyPOST(BoardDTO boardDTO) {
 		
 		log.info("===========================");
 		log.info("board modify post");
 		
-		return "redirect:/board/read/123";
+		boardService.modify(boardDTO);
+		
+		return "redirect:/board/read/" + boardDTO.getBno();
 	}
 	
 	@PostMapping("remove")
-	public String remove() {
+	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
 		
 		log.info("===========================");
 		log.info("board remove post");
+		
+		boardService.remove(bno);
+		
+		rttr.addFlashAttribute("result", bno);
 		
 		return "redirect:/board/list";
 	}
