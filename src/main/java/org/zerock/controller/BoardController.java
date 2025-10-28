@@ -22,8 +22,8 @@ public class BoardController {
 	
 	private final BoardService boardService;
 
-	@GetMapping("list")
-	public void list(@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "size", defaultValue = "10") int size, Model model) {
+	@GetMapping("/list")
+	public void list(@RequestParam( name = "page", defaultValue = "1") int page, @RequestParam( name = "size", defaultValue = "10") int size, Model model) {
 		
 		log.info("page : " + page);
 		log.info("size : " + size);

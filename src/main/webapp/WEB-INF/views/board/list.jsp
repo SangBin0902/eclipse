@@ -26,38 +26,40 @@
 					<tbody class="tbody">
 						
 						<c:forEach var="board" items="${dto.boardDTOList}">
+							
 							<tr data-bno="${board.bno}">
 								<td>
-									<a href='/board/read/${board.bno}'>
-										<c:out value="${board.bno}" />
-									</a>
+								  <a href='/board/read/${board.bno}'>
+								  	<c:out value="${board.bno}"/>
+								  </a>
 								</td>
-								<td><c:out value="${board.title}" /></td>
-								<td><c:out value="${board.writer}" /></td>
-								<td><c:out value="${board.regDate}" /></td>
+								
+								<td><c:out value="${board.title}"/></td>
+								<td><c:out value="${board.writer}"/></td>
+								<td><c:out value="${board.regDate}"/></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 				
 					<div class="d-flex justify-content-center">
+					
 						<ul class="pagination">
-							
+						
 							<c:if test="${dto.prev}">
 							<li class="page-item">
-								<a class="page-link" href="" tabindex="-1">Previous</a>
+								<a class="page-link" href="${dto.start - 1 }" tabindex="-1">Previous</a>
 							</li>
 							</c:if>
-							
 							<c:forEach var="num" items="${dto.pageNums}">
-							<li class="page-item">
+							<li class="page-item ${dto.page == num ? 'active':'' }">
 								<a class="page-link" href="${num}"> ${num} </a>
 							</li>
 							</c:forEach>
 							
 							<c:if test="${dto.next}">
 							<li class="page-item">
-								<a class="page-link" href="">Next</a>
+								<a class="page-link" href="${dto.end + 1 }">Next</a>
 							</li>
 							</c:if>
 						</ul>
@@ -105,8 +107,19 @@ pagingDiv.addEventListener("click", (e) => {
 	
 	const target = e.target
 	
-	console.log(target)
-}, false)
+	// consol.log(target)
+	
+	const targetPage = target.getAttribute("href")
+	
+	const size = ${dto.size} || 10 // BoardListPagingDTO의 size
+	
+	const params = new URLSearchParams({
+		page: targetPage,
+		size: size
+	});
+	
+	self.location =`/board/list?\${params.toString()}`
+})
 
 </script>
 
