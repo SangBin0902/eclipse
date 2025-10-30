@@ -24,20 +24,22 @@ public class BoardService {
 		return boardMapper.list();
 	}
 	
-	public BoardListPagingDTO getList(int page, int size) {
+	public BoardListPagingDTO getList(int page, int size, String typeStr, String keyword) {
 		
 		// 페이지 번호가 0보다 작으면 무조건 1페이지
 		page = page <= 0? 1: page;
 		// 사이즈가 10보다 작거나 100보다 크면 10
 		size = (size <= 10 || page > 100) ? 10: size;
 		
-		int skip = (page -1) * size; // 2페이지라면 (2-1) * 10이 되어야 함
+		int skip = (page -1) * size;
 		
-		List<BoardDTO> list = boardMapper.list2(skip,  size);
+		String[] types = typeStr != null ? typeStr.split(""): null;
 		
-		int total = boardMapper.listCount();
+		List<BoardDTO> list = boardMapper.listSearch(skip,  size, types, keyword);
 		
-		return new BoardListPagingDTO(list, total, page, size);
+		int total = boardMapper.listCountSearch(types, keyword);
+		
+		return new BoardListPagingDTO(list, total, page, size, typeStr, keyword);
 	}
 	
 	public Long register(BoardDTO dto) {

@@ -27,4 +27,8 @@ public interface BoardMapper {
 			@Param("types") String[] types,
 			@Param("keyword") String keyword);	
 	
+	int listCountSearch(
+			@Param("types") String[] types,
+			@Param("keyword") String keyword);
+	
 }

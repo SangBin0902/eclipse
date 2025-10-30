@@ -13,20 +13,26 @@ public class BoardListPagingDTO {
 	private int totalCount;
 	
 	private int page, size;
-	
-	
+
 	private int start, end;
 	
 	private boolean prev, next;
 	
 	private List<Integer> pageNums;
 	
-	public BoardListPagingDTO(List<BoardDTO> boardDTOList, int totalCount, int page, int size) {
+	private String types;
+	
+	private String keyword;
+	
+	
+	public BoardListPagingDTO(List<BoardDTO> boardDTOList, int totalCount, int page, int size, String types, String keyword) {
 		
 		this.boardDTOList = boardDTOList;
 		this.totalCount = totalCount;
 		this.page = page;
 		this.size = size;
+		this.types = types;
+		this.keyword = keyword;
 		
 		// start 계산을 위한 end 페이지
 		int tempEnd = (int)(Math.ceil(page/10.0)) * 10;

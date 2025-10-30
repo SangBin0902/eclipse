@@ -23,12 +23,17 @@ public class BoardController {
 	private final BoardService boardService;
 
 	@GetMapping("/list")
-	public void list(@RequestParam( name = "page", defaultValue = "1") int page, @RequestParam( name = "size", defaultValue = "10") int size, Model model) {
+	public void list(
+			@RequestParam( name = "page", defaultValue = "1") int page, 
+			@RequestParam( name = "size", defaultValue = "10") int size, 
+			@RequestParam( name = "types", required = false) String types,
+			@RequestParam( name = "keyword", required = false) String keyword,
+			Model model) {
 		
 		log.info("page : " + page);
 		log.info("size : " + size);
 		
-		model.addAttribute("dto", boardService.getList(page, size));
+		model.addAttribute("dto", boardService.getList(page, size, types, keyword));
 	}
 	
 	@GetMapping("register")
