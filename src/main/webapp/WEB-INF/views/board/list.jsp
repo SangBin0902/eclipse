@@ -123,7 +123,7 @@ pagingDiv.addEventListener("click", (e) => {
 	
 	const target = e.target
 	
-	// consol.log(target)
+	// console.log(target)
 	
 	const targetPage = target.getAttribute("href")
 	
@@ -134,8 +134,33 @@ pagingDiv.addEventListener("click", (e) => {
 		size: size
 	});
 	
-	self.location =`/board/list?\${params.toString()}`
-})
+	const types = '${dto.types}'
+	const keyword = '${dto.keyword}'
+	
+	if(types && keyword) {
+		params.set('types', types)
+		params.set('keyword', keyword)
+	}
+	
+	console.log(params.toString())
+	
+	self.location =`/board/list?\${params.toString()}` // JavaScript 백틱, 템플릿
+			
+}, false)
+
+document.querySelector(".searchBtn").addEventListener('click', e => {
+
+	const keyword = document.querySelector("input[name='keywordInput']").value
+	const selectObj = document.querySelector("select[name='typeSelect']")
+	const types = selectObj.options[selectObj.selectedIndex].value
+	const params = new URLSearchParams({
+		types: types,
+		keyword: keyword
+	});
+	
+	self.location = `/board/list?\${params.toString()}`
+			
+}, false)
 
 </script>
 
