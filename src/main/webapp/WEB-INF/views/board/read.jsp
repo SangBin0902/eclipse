@@ -79,6 +79,30 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="col-lg-12">
+	<div class="card shadow mb-4">
+		<div class="mb-4">
+		<!-- 댓글 목록 -->
+			<ul class="list-group replyList">
+				<li class="list-group-item">
+					<div class="d-flex justify-content-between">
+						<div>
+							<strong>번호</strong> - 댓글 내용
+						</div>
+						<div class="text-muted small">
+							작성일
+						</div>
+					</div>
+					<div class="mt-1 text-secondary small">
+						작성자
+					</div>
+				</li>
+			</ul>
+				<!-- 댓글 목록 -->
+		</div>
+	</div>
+	</div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -100,6 +124,74 @@ document.querySelector(".addReplyBtn").addEventListener("click", e => {
 		replyForm.reset()
 	})
 }, false)
+
+let currentPage = 1
+let currentSize = 10
+
+const bno = ${board.bno}
+
+function getReplies(pageNum) {
+	
+	axios.get(`/replies/\${bno}/list`, {
+		params : {
+			page: pageNums || currentPage,
+			size: currentSize
+		}
+	}).then(res => {
+	
+		const data = res.data
+		
+		console.log(data)
+		
+		const {totalCount, page, size} = data
+		
+		if(totalCount > (page * size)) {
+			
+			//마지막 페이지를 계산
+			const lagePage = Math.ceil(totalCount / size)
+			
+			getReplies(lastPage)
+			
+		} else {
+			
+			currentPage = page
+			currentSize = size
+			
+			printReplies(data) // 출력
+			
+		}
+	})
+}
+
+getReplies(1)
+
+const replyList = document.querySelector(".replyList")
+
+function printReplies(data) {
+	
+	const {replyDTOList, page, size, prev, next, start, end, pageNums} = data
+	
+	let liStr = ''
+	
+	for(replyDTO of replyDTOList) {
+		
+		liStr += `<li class="list-group-item" data-rno="\${replyDTO.rno}">
+				<div class="d-flex justify-content-between">
+				<div>
+				  <strong>\${replyDTO.rno}</strong> - \${replyDTO.replyText}
+				</div>
+				<div class="text-muted small">
+				  \${replyDTO.replyDate}
+				</div>
+				</div>
+				<div class="mt-1 text-secondary small">
+				  \${replyDTO.replyer}
+				</div>
+			</li>`
+	}
+	
+	replyList.innerHTML = liStr
+}
 
 </script>
 
