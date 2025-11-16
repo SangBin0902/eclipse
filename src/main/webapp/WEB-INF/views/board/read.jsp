@@ -81,7 +81,7 @@
 	</div>
 	
 	<div class="col-lg-12">
-	<div class="card shadow mb-4">
+	  <div class="card shadow mb-4">
 		<div class="mb-4">
 		<!-- 댓글 목록 -->
 			<ul class="list-group replyList">
@@ -100,8 +100,30 @@
 				</li>
 			</ul>
 				<!-- 댓글 목록 -->
+				
+				<!-- 페이징 목록 -->
+			<div aria-label="댓글 페이지 네비게이션" class="mb-4">
+				<ul class="pagination justify-content-center">
+					<li class="page-item disabled">
+						<a class="page-link" href="#" tabindex="-1">이전</a>
+					</li>
+					<li class="page-item active">
+						<a class="page-link" href="#">1</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">2</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">3</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">다음</a>
+					</li>
+				</ul>
+			</div>
+			<!-- 페이징 끝 -->
 		</div>
-	</div>
+	  </div>
 	</div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -122,6 +144,8 @@ document.querySelector(".addReplyBtn").addEventListener("click", e => {
 		console.log("-----------server response------------")
 		console.log(res)
 		replyForm.reset()
+		
+		getReplies(1, true)
 	})
 }, false)
 
@@ -130,7 +154,7 @@ let currentSize = 10
 
 const bno = ${board.bno}
 
-function getReplies(pageNum) {
+function getReplies(pageNums, goLast) {
 	
 	axios.get(`/replies/\${bno}/list`, {
 		params : {
@@ -145,10 +169,11 @@ function getReplies(pageNum) {
 		
 		const {totalCount, page, size} = data
 		
-		if(totalCount > (page * size)) {
+		// goLast 조건이 있고
+		if(goLast && (totalCount > (page * size))) {
 			
 			//마지막 페이지를 계산
-			const lagePage = Math.ceil(totalCount / size)
+			const lastPage = Math.ceil(totalCount / size)
 			
 			getReplies(lastPage)
 			
@@ -163,7 +188,7 @@ function getReplies(pageNum) {
 	})
 }
 
-getReplies(1)
+getReplies(1, true)
 
 const replyList = document.querySelector(".replyList")
 
@@ -191,7 +216,50 @@ function printReplies(data) {
 	}
 	
 	replyList.innerHTML = liStr
+	
+	let pagingStr = ''
+	
+	if(prev) {
+		
+		pagingStr += `<li class="page-item">
+				<a class="page-link" href="\${start - 1}" tabindex="-1">이전</a>
+				</li>`
+	}
+	
+	for(let i of pageNums) {
+		
+		pagingStr += `<li class="page-item \${i === page ? 'active' : ''}">
+				<a class="page-link" href="\${i}">\${i}</a>
+				</li>`
+	}
+	
+	if(next) {
+		
+		pagingStr += `<li class="page-item"><a class="page-link" href="\${end + 1}">다음</a></li>`
+	}
+	
+	document.querySelector(".pagination").innerHTML = pagingStr
+	
 }
+
+document.querySelector(".pagination").addEventListener("click", e => {
+	
+	e.stopPropagation()
+	e.preventDefault()
+	
+	const target = e.target
+	
+	const href = target.getAttribute("href")
+	
+	if(!href) {
+		return
+	}
+	
+	console.log(href)
+	
+	getReplies(href)
+	
+},false)
 
 </script>
 
