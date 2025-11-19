@@ -125,6 +125,31 @@
 		</div>
 	  </div>
 	</div>
+	
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div div class="modal-header">
+				<h5 class="modal-title" id="replyModalLabel">댓글 수정 / 삭제</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form id="replyModForm">
+					<input type="hidden" name="rno" value="33">
+					<div class="mb-3">
+						<label for="replyText" class="form-label">댓글 내용</label>
+						<input type="text" name="replyText" id="replyText" class="form-control" value="Reply Text" />
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary btnReplyMod">수정</button>
+				<button type="button" class="btn btn-danger btnReplyDel">삭제</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -260,6 +285,54 @@ document.querySelector(".pagination").addEventListener("click", e => {
 	getReplies(href)
 	
 },false)
+
+const replyModal = new bootstrap.Modal(document.querySelector("#replyModal"))
+
+const replyModForm = document.querySelector("#replyModForm")
+
+replyList.addEventListener("click", e => {
+
+	// 가장 가까운 상위 li 요소를 찾는다.
+	const targetLi = e.target.closest("li")
+	const rno = targetLi.getAttribute("data-rno")
+	
+	if(!rno) {
+		return
+	}
+	
+	axios.get(`/replies/\${rno}`).then(res => {
+	
+		const targetReply = res.data
+		
+		console.log(targetReply)
+		
+		if(targetReply.delflag === false) {
+			
+			replyModForm.querySelector("input[name = 'rno']").value = targetReply.rno
+			replyModForm.querySelector("input[name = 'replyText']").value = targetReply.replyText
+			
+			replyModal.show()
+			
+		} else {
+			alert("삭제된 댓글은 조회할 수 없습니다.")
+		}
+		
+	})
+	
+}, false)
+
+document.querySelector(".btnReplyDel").addEventListener("click", e => {
+	
+	e.preventDefault()
+	e.stopPropagation()
+	
+	const formData = new FormData(replyModForm)
+	
+	const rno = formData.get("rno")
+	
+	console.log("rno: " + rno)
+	
+}, false)
 
 </script>
 
