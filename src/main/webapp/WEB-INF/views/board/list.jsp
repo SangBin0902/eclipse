@@ -50,9 +50,9 @@
 								  </a>
 								</td>
 								
-								<td><c:out value="${board.title}"/></td>
+								<td><c:out value="${board.title}"/> <b style="color:blue"> [<c:out value="${board.replyCnt}" />] </b></td>
 								<td><c:out value="${board.writer}"/></td>
-								<td><c:out value="${board.regDate}"/></td>
+								<td><c:out value="${board.createdDate}"/></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -86,7 +86,30 @@
 	</div>
 </div>
 
-
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div div class="modal-header">
+				<h5 class="modal-title" id="replyModalLabel">댓글 수정 / 삭제</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form id="replyModForm">
+					<input type="hidden" name="rno" value="33">
+					<div class="mb-3">
+						<label for="replyText" class="form-label">댓글 내용</label>
+						<input type="text" name="replyText" id="replyText" class="form-control" value="Reply Text" />
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary btnReplyMod">수정</button>
+				<button type="button" class="btn btn-danger btnReplyDel">삭제</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript" defer="defer">
 
