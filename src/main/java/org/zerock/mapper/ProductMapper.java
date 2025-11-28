@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.zerock.dto.ProductDTO;
+import org.zerock.dto.ProductListDTO;
 
 public interface ProductMapper {
 
@@ -19,7 +20,7 @@ public interface ProductMapper {
 	
 	int updateOne(ProductDTO productDTO);
 	
-	List<ProductDTO> list(@Param("skip") int skip, @Param("count") int count);
+	List<ProductListDTO> list(@Param("skip") int skip, @Param("count") int count);
 	
 	int listCount();
 	
