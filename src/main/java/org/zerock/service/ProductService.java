@@ -47,4 +47,6 @@ public class ProductService {
 		
 		return new ProductListPagingDTO(list, total, page, size);
 	}
+	
+	
 }

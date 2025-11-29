@@ -104,7 +104,7 @@ public class ProductController {
 				log.info(targetFile.getAbsolutePath());
 				
 				FileCopyUtils.copy(fin, fos);
-				uploadNames.add(fileName);
+				uploadNames.add(uploadName);
 				
 			} catch(Exception e) {
 				

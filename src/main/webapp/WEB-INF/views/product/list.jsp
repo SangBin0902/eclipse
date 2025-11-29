@@ -3,7 +3,7 @@
 
 <%@taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@include file="/WEB-INF/views/includes/header.jsp"  %>
+<%@include file="/WEB-INF/views/includes/header.jsp" %>
 <div class="row justify-content-center">
 	<div class="col-lg-12">
 		<div class="card shadow mb-4">
@@ -21,8 +21,10 @@
 							<th>Writer</th>
 						</tr>
 					</thead>
+					
 					<tbody class="tbody">
 					<c:forEach var="product" items="${dto.productDTOList}">
+					
 					<tr data-bno="${product.pno}">
 						<td>
 							<a href='/product/read/${product.pno}'>
@@ -34,7 +36,6 @@
 							<img src="/images/s_${product.uuid}_${product.fileName}">
 							<c:out value="${product.pname}"/>
 						</td>
-						
 						<td><c:out value="${product.price}"/></td>
 						<td><c:out value="${product.writer}"/></td>
 					</tr>
@@ -51,15 +52,15 @@
 						</c:if>
 						
 						<c:forEach var="num" items="${dto.pageNums}">
-							<li class="page-item ${dto.page == num ? 'active':'' }">
+							<li class="page-item ${dto.page == num ? 'active' : '' }">
 								<a class="page-link" href="${num}">${num}</a>
 							</li>
 						</c:forEach>
 						
 						<c:if test="${dto.next}">
-							<li class="page-next">
-								<a class="page-link">Next</a>
-							</li>
+						<li class="page-item">
+							<a class="page-link">Next</a>
+						</li>
 						</c:if>
 					</ul>
 				</div>
@@ -76,7 +77,7 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				New Product Add
+				New Product Added
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary">Save changes</button>
@@ -88,6 +89,40 @@
 
 <script type="text/javascript" defer="defer">
 
+const pno = '${product}'
+
+const myModal = new bootstrap.Modal(document.getElementById('myModal'))
+
+if(pno) {
+	myModal.show()
+}
+
+const pagingDiv = document.querySelector(".pagination")
+
+pagingDiv.addEventListener("click", (e) => {
+
+	e.preventDefault()
+	e.stopPropagation()
+	
+	const target = e.target
+	
+	// console.log(target)
+	
+	const targetPage = target.getAttribute("href")
+	
+	const size = ${dto.size} || 10 // BoardListPagingDTO의 사이즈
+	
+	const params = new URLSearchParams({
+		page: targetPage,
+		size: size
+	});
+	
+	console.log(params.toString())
+	
+	self.location = `/product/list?\${params.toString()}` // JavaScript 백틱, 템플릿
+			
+}, false)
+
 </script>
 
-<%@include file="/WEB-INF/views/includes/footer.jsp"  %>
+<%@include file="/WEB-INF/views/includes/footer.jsp" %>
