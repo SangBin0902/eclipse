@@ -25,7 +25,7 @@
 					<tbody class="tbody">
 					<c:forEach var="product" items="${dto.productDTOList}">
 					
-					<tr data-bno="${product.pno}">
+					<tr data-bno="${product.pno}" class="${not product.sale ? 'deleted-row' : ''}">
 						<td>
 							<a href='/product/read/${product.pno}'>
 								<c:out value="${product.pno}"/>
@@ -87,13 +87,32 @@
 	</div>
 </div>
 
+<style>
+.deleted-row {
+	background-color: #f0f0f0;
+	color: #888;
+	text-decoration: line-through;
+	font-size: italic;
+}
+
+.deleted-row img {
+	opacity: 0.4;
+}
+
+</style>
+
 <script type="text/javascript" defer="defer">
 
 const pno = '${product}'
+const result = '${result}'
 
 const myModal = new bootstrap.Modal(document.getElementById('myModal'))
 
-if(pno) {
+if(result) {
+	document.querySelector(".modal-body").innerHTML = result
+}
+
+if(pno || result) {
 	myModal.show()
 }
 

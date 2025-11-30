@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -161,5 +162,37 @@ public class ProductController {
 		
 		ProductListPagingDTO dto = service.getList(page, size);
 		model.addAttribute("dto", dto);
+	}
+	
+	@GetMapping("read/{pno}")
+	public String read(@PathVariable("pno") Integer pno, Model model) {
+		
+		log.info("pno: " + pno);
+		
+		model.addAttribute("product", service.read(pno));
+		
+		return "product/read";
+	}
+	
+	@GetMapping("modify/{pno}")
+	public String modifyGET(@PathVariable("pno") Integer pno, Model model) {
+		
+		log.info("pno: " + pno);
+		
+		model.addAttribute("product", service.read(pno));
+		
+		return "/product/modify";
+		
+	}
+	
+	@PostMapping("remove")
+	public String remove(@RequestParam("pno") Integer pno, RedirectAttributes rttr) {
+		
+		service.remove(pno);
+		
+		rttr.addFlashAttribute("result", "deleted");
+		
+		return "redirect:/product/list";
+		
 	}
 }
