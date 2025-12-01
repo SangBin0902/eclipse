@@ -40,6 +40,10 @@
 					<input type="number" name="price" class="form-control" value="<c:out value='${product.price}'/>">
 				</div>
 				
+				<div class="mb-3">
+					<input type="file" name="files" class="form-control" multiple="multiple">
+				</div>
+				
 				<div class="float-end">
 					<button type="button" class="btn btn-info btnList">LIST</button>
 					<button type="button" class="btn btn-warning btnModify">MODIFY</button>
@@ -51,7 +55,7 @@
 	</div>
 </div>
 
-<div class="mb-3">
+<div class="mb-3 productImages">
 	<label class="form-label fw-bold">Product Images</label>
 	<div class="row">
 		<c:forEach var="image" items="${product.imageList}">
@@ -60,6 +64,9 @@
 					<a href="/images/${image.uuid}_${image.fileName}" target="_blank">
 						<img src="/images/${image.uuid}_${image.fileName}" class="card-img-top img-fluid" alt="Product Image">
 					</a>
+						<button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 delete-image-btn" data-file="${image.uuid}_${image.fileName}">
+						Delete
+						</button>
 				</div>
 			</div>
 		</c:forEach>
@@ -81,6 +88,51 @@ document.querySelector(".btnRemove").addEventListener("click", e => {
 	form1.submit()
 	
 }, false)
+
+document.querySelector(".productImages").addEventListener("click", e => {
+	
+	e.preventDefault()
+	e.stopPropagation()
+	
+	const target = e.target
+	const fileName = target.getAttribute("data-file")
+	
+	if(!fileName) {
+		return
+	}
+	
+	// 해당 <div>를 찾아가야 함
+	
+	const divObj = target.closest(".col-md-3")
+	divObj.remove()
+	
+}, false)
+
+document.querySelector(".btnModify").addEventListener("click", (e) => {
+
+	e.preventDefault()
+	e.stopPropagation()
+	
+	form1.action = '/product/modify';
+	form1.method = 'post';
+	
+	const imageArr = document.querySelectorAll(".productImages button")
+	
+	if(imageArr) {
+		
+		let str = ""
+		
+		for(let image of imageArr) {
+			
+			const imageFile = image.getAttribute("data-file")
+			
+			str += `<input type='hidden' name='oldImages' value='\${imageFile}'>`
+			
+		}
+		
+		form1.querySelector("div:last-child").insertAdjacentHTML("beforeend", str)
+	}
+});
 
 </script>
 
