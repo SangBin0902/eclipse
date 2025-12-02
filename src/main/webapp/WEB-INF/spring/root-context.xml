@@ -49,6 +49,8 @@ xmlns:aop="http://www.springframework.org/schema/aop"
 	
 	<context:component-scan base-package="org.zerock.aop"></context:component-scan>
 	
+	<context:component-scan base-package="org.zerock.security"></context:component-scan>
+	
 	<aop:aspectj-autoproxy/>
 	
 	<tx:annotation-driven/>

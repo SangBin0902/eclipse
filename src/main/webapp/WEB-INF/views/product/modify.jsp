@@ -127,11 +127,12 @@ document.querySelector(".btnModify").addEventListener("click", (e) => {
 			const imageFile = image.getAttribute("data-file")
 			
 			str += `<input type='hidden' name='oldImages' value='\${imageFile}'>`
-			
 		}
 		
 		form1.querySelector("div:last-child").insertAdjacentHTML("beforeend", str)
 	}
+	
+	form1.submit()
 });
 
 </script>

@@ -185,6 +185,7 @@ public class ProductController {
 		
 	}
 	
+	@PostMapping("modify")
 	public String modifyPost(ProductDTO productDTO, @RequestParam("oldImages") String[] oldImages, @RequestParam("files") MultipartFile[] files) {
 		
 		List<String> newFileNames = uploadFiles(files);
@@ -214,7 +215,7 @@ public class ProductController {
 		
 		service.modify(productDTO);
 		
-		return "redirect:/product/read" + productDTO.getPno();
+		return "redirect:/product/read/" + productDTO.getPno();
 	}
 	
 	@PostMapping("remove")
