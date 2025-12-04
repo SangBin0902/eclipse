@@ -1,5 +1,6 @@
 package org.zerock.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ public class HelloController {
 	
 	private final HelloService helloService;
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/ex1")
 	public void ex1() {
 		log.info("/sample/ex1");
@@ -86,5 +88,12 @@ public class HelloController {
 	@GetMapping("/ex8")
 	public void ex8() {
 		log.info("/sample/ex8");
+	}
+	
+	@GetMapping("access-denied")
+	public String accessDenied() {
+		
+		return "/sample/accessDenied";
+		
 	}
 }

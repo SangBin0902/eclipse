@@ -18,5 +18,8 @@ public class Custom403Handler implements AccessDeniedHandler {
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		
 		log.info("----------AccessDeniedHandler------------");
+		
+		response.sendRedirect(request.getContextPath() + "/sample/access-denied");
+		
 	}
 }
