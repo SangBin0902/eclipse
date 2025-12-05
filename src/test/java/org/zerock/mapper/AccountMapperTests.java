@@ -40,31 +40,44 @@ public class AccountMapperTests {
 //		log.info(match);
 //	}
 	
+//	@Test
+//	@Transactional
+//	@Commit
+//	public void testInsert() {
+//		
+//		for(int i = 1; i <= 100; i++) {
+//			
+//			AccountDTO accountDTO = new AccountDTO();
+//			
+//			accountDTO.setUid("user" + i);
+//			accountDTO.setUpw(encoder.encode("1111"));
+//			accountDTO.setUname("User" + i);
+//			accountDTO.setEmail("user" + i + "@aaa.com");
+//			accountDTO.addRole(AccountRole.USER);
+//			
+//			if(i >= 80) {
+//				accountDTO.addRole(AccountRole.MANAGER);
+//			}
+//			
+//			if(i >= 90) {
+//				accountDTO.addRole(AccountRole.ADMIN);
+//			}
+//			
+//			accountMapper.insert(accountDTO);
+//			accountMapper.insertRoles(accountDTO);
+//		}
+//	}
+	
 	@Test
-	@Transactional
-	@Commit
-	public void testInsert() {
+	public void testSelectOne() {
 		
-		for(int i = 1; i <= 100; i++) {
-			
-			AccountDTO accountDTO = new AccountDTO();
-			
-			accountDTO.setUid("user" + i);
-			accountDTO.setUpw(encoder.encode("1111"));
-			accountDTO.setUname("User" + i);
-			accountDTO.setEmail("user" + i + "@aaa.com");
-			accountDTO.addRole(AccountRole.USER);
-			
-			if(i >= 80) {
-				accountDTO.addRole(AccountRole.MANAGER);
-			}
-			
-			if(i >= 90) {
-				accountDTO.addRole(AccountRole.ADMIN);
-			}
-			
-			accountMapper.insert(accountDTO);
-			accountMapper.insertRoles(accountDTO);
-		}
+		String uid = "user100";
+		
+		AccountDTO accountDTO = accountMapper.selectOne(uid);
+		
+		log.info(accountDTO);
+		
+		log.info(accountDTO.getRoleNames());
+		
 	}
 }

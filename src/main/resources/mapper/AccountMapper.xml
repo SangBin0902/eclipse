@@ -17,4 +17,25 @@ VALUES
 </foreach>
 
 </insert>
+
+<resultMap type="AccountDTO" id="selectMap">
+
+	<id property="uid" column="uid"/>
+	<result property="upw" column="upw"/>
+	<result property="uname" column="uname"/>
+	<result property="email" column="email"/>
+	
+	<collection property="roleNames" ofType="AccountRole">
+	
+		<result column="rolename" typeHandler="org.apache.ibatis.type.EnumTypeHandler" javaType="AccountRole"/>
+	</collection>
+</resultMap>
+
+<select id="selectOne" resultMap="selectMap">
+
+SELECT ac.uid, ac.upw, ac.uname, ac.email, ar.rolename
+FROM tbl_account ac INNER JOIN tbl_account_roles ar ON ar.uid = ac.uid
+WHERE ac.uid = #{uid}
+
+</select>
 </mapper>

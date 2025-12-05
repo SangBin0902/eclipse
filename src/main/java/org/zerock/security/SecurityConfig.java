@@ -22,6 +22,7 @@ public class SecurityConfig {
 		
 		http.formLogin(config -> {
 			
+			config.loginPage("/account/login");
 		});
 		
 		http.csrf(config -> {
