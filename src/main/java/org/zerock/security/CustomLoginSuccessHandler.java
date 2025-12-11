@@ -20,12 +20,17 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 	
 		log.info("authentication: " + authentication);
 		
-		// 세션에서 SacedRequest 확인
+		// 세션에서 SavedRequest 확인
 		SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response);
 		
 		log.info(savedRequest);
 		
-		response.sendRedirect("board/list");
-		
+		if(savedRequest != null) {
+			
+			response.sendRedirect(savedRequest.getRedirectUrl());
+		} else {
+			
+			response.sendRedirect("/board/list");
+		}
 	}
 }

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,11 +68,43 @@
 		button[type="submit"]:hover {
 			background-color: #0056b3;
 		}
+		
+		.message {
+			margin-bottom: 15px;
+			padding: 10px;
+			border-radius: 4px;
+			font-size: 0.9em;
+		}
+		
+		.error {
+			background-color: #fdecea;
+			color: #d9534f;
+			border: 1px solid #e74c3c;
+		}
+		
+		.logout-success {
+			background-color: #d4edda;
+			color: #155724;
+			border: 1px solid #c3e6cb;
+		}
 	</style>
 </head>
 <body>
 	<div class="login-container">
 		<h2>로그인</h2>
+		
+		<c:if test="${param.error != null}">
+			<div class="message error">
+				로그인 실패: 사용자 이름 또는 비밀번호를 확인하세요.	
+			</div>
+		</c:if>
+		
+		<c:if test="${param.logout != null}">
+			<div class="message logout-success">
+				성공적으로 로그아웃 되었습니다.
+			</div>
+		</c:if>
+		
 		<form method="post">
 			<div class="form-group">
 				<label for="username">사용자 이름:</label>
@@ -78,6 +113,12 @@
 			<div class="form-group">
 				<label for="password">비밀번호:</label>
 				<input type="password" id="password" name="password" required>
+			</div>
+			<div class="form-group">
+				<label>
+				  <input type="checkbox" name="remember-me">
+				  로그인 상태 유지
+				</label>
 			</div>
 			<button type="submit">로그인</button>
 		</form>
