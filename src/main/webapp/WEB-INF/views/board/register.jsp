@@ -3,6 +3,8 @@
 
 <%@include file="/WEB-INF/views/includes/header.jsp" %>
 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <div class="row justify-content-center">
 	<div class="col-lg-12">
 		<div class="card shadow m-4">
@@ -23,7 +25,8 @@
 					</div>
 					
 					<div class="mb-3">
-						<label class="form-label">Writer</label> <input type="text" name="writer" class="form-control">
+						<label class="form-label">Writer</label>
+						<input type="text" name="writer" class="form-control" value="<sec:authentication property="principal.uid"/>" readonly>
 					</div>
 					
 					<div class="d-flex justify-content-end">

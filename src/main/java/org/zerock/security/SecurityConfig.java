@@ -55,6 +55,11 @@ public class SecurityConfig {
 			handler.accessDeniedHandler(new Custom403Handler());
 		});
 		
+		http.logout(config -> {
+			
+			config.deleteCookies("JSESSIONID", "remember-me");
+		});
+		
 		return http.build();
 	}
 	

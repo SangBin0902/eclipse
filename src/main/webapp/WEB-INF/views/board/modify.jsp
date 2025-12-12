@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%@taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@include file="/WEB-INF/views/includes/header.jsp"  %>
+<%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/WEB-INF/views/includes/header.jsp"  %>
+
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="row jusify-content-center">
 	<div class="col-lg-12">
@@ -44,8 +47,15 @@
 			
 				<div class="float-end">
 					<button type="button" class="btn btn-info btnList ">LIST</button>
+					
+					<sec:authentication property="principal" var="secInfo" />
+					<sec:authentication property="authorites" var="roles" />
+						
+					<c:if test="${!board.delFlag && (secInfo.uid == board.writer || fn:contains(roles, 'ROLE_ADMIN'))}">
+					
 					<button type="button" class="btn btn-warning btnModify">MODIFY</button>
-					<button type="button" class="btn btn-danger btnRemove">REMOVE</button>
+					<button type="button" class="btn btn-danger btnRemove">REMOVE</button>	
+					</c:if>					
 				</div>
 			</div>
 		</div>

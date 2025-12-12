@@ -30,5 +30,12 @@
 	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
 	
 	<security:global-method-security pre-post-annotations="enabled" />
+	
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<bean class="org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+	
 
 </beans>

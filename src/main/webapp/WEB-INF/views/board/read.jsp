@@ -5,6 +5,9 @@
 
 <%@include file="/WEB-INF/views/includes/header.jsp"  %>
 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <div class="row justify-content-center">
 	<div class="col-lg-12">
 		<div class="card shadow mb-4">
@@ -39,11 +42,15 @@
 				</div>
 				
 				<div class="float-end">
-					<a href='/board/list'>
+					<a href='/board/list' class="btn">
 						<button type="button" class="btn btn-info btnList">LIST</button>
 					</a>
-					<c:if test="${!board.delFlag}">
-						<a href='/board/modify/${board.bno}'>
+					
+					<sec:authentication property="principal" var="secInfo" />
+					<sec:authentication property="authorities" var="roles" />
+					
+					<c:if test="${!board.delFlag && (secInfo.uid == board.writer || fn:contains(roles, 'ROLE_ADMIN'))}">
+						<a href='/board/modify/${board.bno}' class="btn">
 							<button type="button" class="btn btn-warning btnModify">MODIFY</button>
 						</a>
 					</c:if>
