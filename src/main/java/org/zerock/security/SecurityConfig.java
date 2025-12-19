@@ -57,6 +57,7 @@ public class SecurityConfig {
 		
 		http.logout(config -> {
 			
+			config.logoutSuccessUrl("/?logout");
 			config.deleteCookies("JSESSIONID", "remember-me");
 		});
 		

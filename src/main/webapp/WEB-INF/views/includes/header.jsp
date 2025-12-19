@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+<%@taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +15,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-custom px-4">
-	  <a class="navbar-brand" href="#">AdminPanel</a>
+	  <a class="navbar-brand" href="/">Eclipse Project</a>
 	  <div class="collapse navbar-collapse">
 	  	<ul class="navbar-nav me-auto">
 	  		<li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
@@ -21,7 +23,14 @@
 	  		<li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
 	  	</ul>
 	  	<span class="navbar-text">
-	  	  Logged in as <strong>admin</strong> | <a href="#" class="text-white text-decoration-underline">Logout</a>
+	  	  <c:choose>
+	  	  	<c:when test="${pageContext.request.userPrincipal.name != null}">
+	  	  		<strong>${pageContext.request.userPrincipal.name}</strong> | <a href="/account/logout" class="text-white text-decoration-underline">Logout</a>
+	  	  	</c:when>
+	  	  	<c:otherwise>
+	  	  		<a href="/account/login" class="text-white text-decoration-underline">Login</a>
+	  	  	</c:otherwise>
+	  	  </c:choose>
 	  	</span>
 	  </div>
 	</nav>
