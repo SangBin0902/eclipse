@@ -16,15 +16,19 @@
 			margin-right: 10px;
 			font-size: 16px;
 			color: white;
-			background-color: #007bff;
+			background-color: #FF7F50;
+			backgound-image: linear-gradient(to bottom, #FF997A, #FF7F50, #E06A3F);
 			border: none;
 			border-radius: 5px;
 			text-decoration: none;
 			cursor: pointer;
-			transition: background-color 0.3s ease;
+			transition: background-color 0.3s ease, box-shadow 0.3s ease;
+			box-shadow: 0 2px 5px rgba(255,127,80,0.4);
 		}
 		.btn-board:hover {
-			background-color: #0056b3;
+			background-color: #E06A3F;
+			background-image: linear-gradient(to bottom, #FF997A, #E06A3F);
+			box-shadow: 0 4px 8px rgba(255,127,80,0.5);
 		}
 		.button-container {
 			display: flex;
