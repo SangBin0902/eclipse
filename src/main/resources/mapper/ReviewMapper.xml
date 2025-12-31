@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.zerock.mapper.ReviewMapper">
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rno">
+		INSERT INTO tbl_review (pno, mid, rating, review_content)
+		VALUES (#{pno}, #{mid}, #{rating}, #{reviewContent})
+	</insert>
+	
+	<select id="getListByPno" resultType="org.zerock.dto.ReviewDTO">
+		SELECT rno, mid, rating, review_content, regDate, modDate
+		FROM tbl_review
+		WHERE pno = #{pno}
+		ORDER BY rno DESC
+	</select>
+	
+	<select id="selectOne" resultType="org.zerock.dto.ReviewDTO">
+		SELECT rno, pno, mid, rating, review_content, regDate, modDate
+		FROM tbl_review
+		WHERE rno = #{rno}
+	</select>
+	
+	<update id="update">
+		UPDATE tbl_review
+		SET rating = #{rating}, review_content = #{reviewContent}, modDate = current_TIMESTAMP
+		WHERE rno = #{rno} AND mid = #{mid}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM tbl_review
+		WHERE rno = #{rno} AND mid = #{mid}
+	</delete>
+	
+	<select id="getProductReviewSummary" resultType="map">
+		SELECT AVG(rating) as averageRating, COUNT(rno) as reviewContent
+		FROM tbl_review
+		WHERE pno = #{pno}
+	</select>
+</mapper>

@@ -4,6 +4,11 @@
 <%@taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@include file="/WEB-INF/views/includes/header.jsp" %>
+
+<style>
+	
+</style>
+
 <div class="row justify-content-center">
 	<div class="col-lg-12">
 		<div class="card shadow mb-4">
@@ -58,6 +63,26 @@
 				</div>
 			</div>
 		</c:forEach>
+	</div>
+</div>
+
+<div class="row justify-content-center mt-5">
+	<div class="col-lg-12">
+		<div class="summary-box">
+			<h4>리뷰 통계</h4>
+			<p>
+				총 리뷰 개수: <span class="badge bg-primary">${reviewSummary.totalReview != null ? reviewSummary.totalReview : 0}</span>개 <br>
+				평균 별점: <span class="badge bg-warning text-dark">${reviewSummary.averageRating != null ? reviewSummary.averageRating : 'N/A'}</span> / 5
+			</p>
+			<c:if test="${reviewSummary.starCounts != null}">
+				<div class="mt-2">
+					<p class="mb-1"><strong>별점 분포:</strong></p>
+					<ul class="list-unstyled">
+						<li>5점: <span class="badge bg-light text-dark">${reviewSummary.starCounts['5'] != null ? reviewSummary.starCounts['5'] : 0}</span>개</li>
+					</ul>
+				</div>
+			</c:if>
+		</div>
 	</div>
 </div>
 

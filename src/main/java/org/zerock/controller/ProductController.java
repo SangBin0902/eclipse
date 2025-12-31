@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
@@ -21,8 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.dto.ProductDTO;
 import org.zerock.dto.ProductListPagingDTO;
+import org.zerock.dto.ReviewDTO;
 import org.zerock.service.ProductService;
-
+import org.zerock.service.ReviewService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -35,6 +37,7 @@ import net.coobird.thumbnailator.Thumbnails;
 public class ProductController {
 	
 	private final ProductService service;
+	private final ReviewService reviewService;
 	
 	@GetMapping("register")
 	public void registerGET() {
@@ -167,9 +170,17 @@ public class ProductController {
 	@GetMapping("read/{pno}")
 	public String read(@PathVariable("pno") Integer pno, Model model) {
 		
-		log.info("pno: " + pno);
+		log.info("상품 상세 정보 및 리뷰 요청: pno: " + pno);
 		
 		model.addAttribute("product", service.read(pno));
+		
+		List<ReviewDTO> reviewList = reviewService.getList(pno);
+		model.addAttribute("reviewList", reviewList);
+		
+		Map<String, Object> reviewSummary = reviewService.getProductReviewSummary(pno);
+		model.addAttribute("reviewSummary", reviewSummary);
+		
+		model.addAttribute("currentPno", pno);
 		
 		return "product/read";
 	}
