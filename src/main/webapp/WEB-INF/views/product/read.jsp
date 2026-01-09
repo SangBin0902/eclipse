@@ -6,7 +6,46 @@
 <%@include file="/WEB-INF/views/includes/header.jsp" %>
 
 <style>
-	
+	.review-card {
+		border: 1px solid #e0e0e0;
+		border-radius: 8px;
+		padding: 15px;
+		margin-bottom: 10px;
+		background-color: #fff;
+		box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+	}
+	.review-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+	.reivew-rating {
+		color: #ffc107;
+		font-size: 1.2em;
+	}
+	.review-content {
+		margin-bottom: 10px;
+	}
+	.review-meta {
+		font-size: 0.85em;
+		color: #6c757d;
+		text-allign: right;
+	}
+	.summary-box {
+		background-color: #f8f9fa;
+		border: 1px solid #e9ecef;
+		border-radius: 5px;
+		padding: 15px;
+		margin-bottom: 20px;
+	}
+	.form-label { font-weight: bold; }
+	.card-img-top.img-fluid {
+		max-width: 100%;
+		height: 200px;
+		object-fit: contain;
+		pading: 10px;
+	}
 </style>
 
 <div class="row justify-content-center">
@@ -120,7 +159,7 @@
 								<span>작성자: <strong>${review.mid}</strong></span>
 							</div>
 							<div class="review-content">
-								<p>${review.content}</p>
+								<p>${review.reviewContent}</p>
 							</div>
 							<div class="review-meta">
 								<fmt:formatDate value="${review.regDate}" pattern="yyyy.MM.dd HH:mm"/>
@@ -142,13 +181,46 @@
 		<h4 class="mb-3">리뷰 작성하기</h4>
 		<div id="review-form" class="card p-4 shadow-sm">
 			<form action="/reviews/register" method="post" class="needs-validation" novalidate>
+				<input type="hidden" name="pno" value="${currentPno}">
+				<div class="mb-3">
+					<label for="rating" class="form-label">별점</label>
+					<select class="form-select" id="rating" name="rating" required>
+						<option value="">별점을 선택해주세요</option>
+						<option value="5">🌟🌟🌟🌟🌟 (5점)</option>
+						<option value="4">🌟🌟🌟🌟 (4점)</option>
+						<option value="3">🌟🌟🌟 (3점)</option>
+						<option value="2">🌟🌟 (2점)</option>
+						<option value="1">🌟 (1점)</option>
+					</select>
+					<div class="invalid-feedback">별점을 선택해주세요.</div>
+				</div>
+				<div class="mb-3">
+					<label for="content" class="form-label">리뷰 내용</label>
+					<textarea class="form-control" id="content" name="reviewContent" rows="4" placeholder="솔직한 리뷰를 남겨주세요." required></textarea>
+					<div class="invalid-feedback">리뷰 내용을 입력해주세요.</div>
+				</div>
+				<input type="hidden" name="mid" value="user123">
+				<button type="submit" class="btn btn-primary">리뷰 등록</button>
 			</form>
 		</div>
 	</div>
 </div>
 
 <script>
-
+	'use strict';
+	
+		var forms = document.querySelectorAll('.needs-validation');
+		
+		Array.prototype.slice.call(forms)
+			.forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault();
+						event.stopPropagation();
+					}
+					form.classList.add('was-validated');
+				}, false);
+			});
 </script>
 
 <%@include file="/WEB-INF/views/includes/footer.jsp" %>
